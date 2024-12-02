@@ -24,8 +24,8 @@ public class BookController {
 
     @GetMapping
     @JsonView(Book.BookSummary.class)
-    public ResponseEntity<Map<String, Object>> getAllBooks(@RequestParam(defaultValue = "0",required = false) int page,
-                                                                     @RequestParam(defaultValue = "10",required = false) int size) {
+    public ResponseEntity<Map<String, Object>> getAllBooks(@RequestParam(defaultValue = "0", required = false) int page,
+                                                           @RequestParam(defaultValue = "10", required = false) int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Book> booksPage = bookService.getAllBooks(pageable);
 
@@ -58,17 +58,17 @@ public class BookController {
     @JsonView(Book.BookSummary.class)
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
         Book updatedBook = bookService.updateBook(id, book);
-        return  new ResponseEntity<>(updatedBook, HttpStatus.OK);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
 
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
-        return bookService.deleteBook(id) ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
+}
     // why doesnt work?
 //    @GetMapping
 //    @JsonView(Book.BookSummary.class)
@@ -78,4 +78,3 @@ public class BookController {
 //        Page<Book> books = bookService.getAllBooks(pageable);
 //        return ResponseEntity.ok(books);
 //    }
-}

@@ -23,4 +23,9 @@ public class Author {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Book> books;
+
+    public Author(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
